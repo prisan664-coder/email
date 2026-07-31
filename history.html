@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="lo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ປະຫວັດອີເມວເກົ່າ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Lao', sans-serif;
+        }
+
+        body {
+            background-color: #e65100;
+            color: #333;
+            padding-bottom: 70px;
+        }
+
+        .header {
+            background-color: #bf360c;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #bf360c;
+            border-bottom: 2px solid #ffe0b2;
+            padding-bottom: 5px;
+        }
+
+        .history-item {
+            background: #f5f5f5;
+            border-left: 5px solid #d32f2f;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        .history-item p {
+            margin: 3px 0;
+            font-size: 14px;
+        }
+
+        .btn-restore {
+            width: 100%;
+            margin-top: 8px;
+            padding: 6px 10px;
+            background-color: #0288d1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 6px 0;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-edit {
+            background-color: #f57c00;
+        }
+
+        .btn-delete {
+            background-color: #d32f2f;
+        }
+
+        /* Modal for Edit in History Page */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: #800000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 2px solid #ffb74d;
+        }
+
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        .nav-icon {
+            font-size: 18px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        ປະຫວັດອີເມວເກົ່າ (ประวัติอีเมลเก่า)
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h3>ລາຍການອີເມວທີ່ໃຊ້ງານແລ້ວ</h3>
+            <div id="historyList">
+                <p style="text-align:center;">ກຳລັງໂຫລດຂໍ້ມູນ...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 10px; color:#bf360c;">ແກ້ໄຂຂໍ້ມູນອີເມວ</h3>
+            <input type="hidden" id="modalEditKey">
+            <div class="input-group">
+                <label>ຊື່:</label>
+                <input type="text" id="modalName">
+            </div>
+            <div class="input-group">
+                <label>ເບີໂທ:</label>
+                <input type="text" id="modalPhone">
+            </div>
+            <div class="input-group">
+                <label>ອີເມວ:</label>
+                <input type="email" id="modalEmail">
+            </div>
+            <div class="input-group">
+                <label>ລະຫັດຜ່ານ:</label>
+                <input type="text" id="modalPassword">
+            </div>
+            <div class="action-btns">
+                <button class="btn-action btn-edit" id="saveModalBtn">ບັນທຶກ</button>
+                <button class="btn-action btn-delete" onclick="closeModal()">ຍົກເລີກ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            ໜ້າທຳອິດ
+        </a>
+        <a href="history.html" class="nav-item active">
+            <span class="nav-icon">📜</span>
+            ປະຫວັດອີເມວເກົ່າ
+        </a>
+    </div>
+
+    <!-- Firebase Script -->
+    <script type="module">
+        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import {getDatabase, ref, onValue, update, remove} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBriOzZumxBXSpwL6Kavvyd089UiPzTQfw",
+            authDomain: "hukhujai-app.firebaseapp.com",
+            databaseURL: "https://hukhujai-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "hukhujai-app",
+            storageBucket: "hukhujai-app.firebasestorage.app",
+            messagingSenderId: "536937955261",
+            appId: "1:536937955261:web:4a35c99a854a1e58c89cd4",
+            measurementId: "G-EXTZ6V7CBH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Read Used Emails
+        const emailListRef = ref(db, 'emails');
+        onValue(emailListRef, (snapshot) => {
+            const data = snapshot.val();
+            const historyListDiv = document.getElementById('historyList');
+            historyListDiv.innerHTML = '';
+
+            if (!data) {
+                historyListDiv.innerHTML = '<p style="text-align:center; color:#666;">ບໍ່ມີປະຫວັດຂໍ້ມູນ</p>';
+                return;
+            }
+
+            let hasItems = false;
+            for (let id in data) {
+                const item = data[id];
+                if (item.status === 'ຂາຍອອກແລ້ວ') {
+                    hasItems = true;
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'history-item';
+                    itemDiv.innerHTML = `
+                        <p><strong>ຊື່:</strong> ${item.name}</p>
+                        <p><strong>ເບີໂທ:</strong> ${item.phone || '-'}</p>
+                        <p><strong>ອີເມວ:</strong> ${item.email}</p>
+                        <p><strong>ລະຫັດຜ່ານ:</strong> ${item.password}</p>
+                        <p><strong>ສະຖານະ:</strong> <span style="color:#d32f2f; font-weight:bold;">${item.status}</span></p>
+                        <button class="btn-restore" onclick="restoreStatus('${id}')">↩️ ຍ້າຍກັບໄປໜ້າທຳອິດ</button>
+                        <div class="action-btns">
+                            <button class="btn-action btn-edit" onclick="openModal('${id}', '${item.name}', '${item.phone || ''}', '${item.email}', '${item.password}')">✏️ ແກ້ໄຂ</button>
+                            <button class="btn-action btn-delete" onclick="deleteItem('${id}')">🗑️ ລຶບ</button>
+                        </div>
+                    `;
+                    historyListDiv.appendChild(itemDiv);
+                }
+            }
+
+            if (!hasItems) {
+                historyListDiv.innerHTML = '<p style="text-align:center; color:#666;">ບໍ່ມີປະຫວັດອີເມວເກົ່າ</p>';
+            }
+        });
+
+        // Restore Status
+        window.restoreStatus = function (id) {
+            const itemRef = ref(db, `emails/${id}`);
+            update(itemRef, {status: 'ໃຫມ່'});
+        };
+
+        // Delete Item Permanently
+        window.deleteItem = function (id) {
+            if (confirm('ທ່ານຕ້ອງການລຶບรายการນີ້ແທ້ບໍ?')) {
+                const itemRef = ref(db, `emails/${id}`);
+                remove(itemRef).then(() => {
+                    alert('ລຶບຂໍ້ມູນສຳເລັດ!');
+                });
+            }
+        };
+
+        // Modal Functions for Edit
+        window.openModal = function (id, name, phone, email, password) {
+            document.getElementById('modalEditKey').value = id;
+            document.getElementById('modalName').value = name;
+            document.getElementById('modalPhone').value = phone;
+            document.getElementById('modalEmail').value = email;
+            document.getElementById('modalPassword').value = password;
+            document.getElementById('editModal').style.display = 'flex';
+        };
+
+        window.closeModal = function () {
+            document.getElementById('editModal').style.display = 'none';
+        };
+
+        document.getElementById('saveModalBtn').addEventListener('click', () => {
+            const id = document.getElementById('modalEditKey').value;
+            const name = document.getElementById('modalName').value.trim();
+            const phone = document.getElementById('modalPhone').value.trim();
+            const email = document.getElementById('modalEmail').value.trim();
+            const password = document.getElementById('modalPassword').value.trim();
+
+            if (!name || !email || !password) {
+                alert('ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ');
+                return;
+            }
+
+            const itemRef = ref(db, `emails/${id}`);
+            update(itemRef, {name, phone, email, password}).then(() => {
+                alert('ບັນທຶກການແກ້ໄຂສຳເລັດ!');
+                closeModal();
+            });
+        });
+    </script>
+</body>
+
+</html>
