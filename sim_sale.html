@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="lo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ຮ້ານຂາຍເບີໂທລະສັບລົງທະບຽນແລ້ວ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Lao', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #bf360c, #e65100);
+            color: white;
+            text-align: center;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sim-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sim-num {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .sim-details {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .sim-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .btn-add {
+            background-color: #e65100;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #2e7d32;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 12px 20px;
+            border-top: 2px solid #e65100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .qr-box {
+            text-align: center;
+            border: 2px dashed #bf360c;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            background: #fffbe6;
+        }
+
+        .qr-box img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .contact-footer {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #c8e6c9;
+            font-size: 13px;
+            color: #1b5e20;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">📱 ຮ້ານຂາຍເບີໂທລະສັບລົງທະບຽນແລ້ວ</div>
+
+    <div class="container">
+        <div class="card">
+            <h3 style="margin-bottom: 10px; color: #bf360c;">ລາຍການເບີໂທລະສັບທີ່ມີໃນຮ້ານ</h3>
+            <div id="simList">ກຳລັງໂຫລດຂໍ້ມູນ...</div>
+        </div>
+    </div>
+
+    <!-- Bottom Cart Bar -->
+    <div class="cart-bar">
+        <div>
+            <span style="font-size: 12px;">ກະຕ່າສິນຄ້າ: <b id="cartCount">0</b> ລາຍການ</span>
+            <div style="font-size: 16px; font-weight: bold; color: #2e7d32;" id="cartTotal">0 LAK</div>
+        </div>
+        <button class="btn btn-add" onclick="openCartModal()">🛒 ເບິ່ງກະຕ່າສິນຄ້າ</button>
+    </div>
+
+    <!-- Cart & Payment Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <h3 style="color: #bf360c; margin-bottom: 10px;">🛒 ກະຕ່າສິນຄ້າ</h3>
+            <div id="cartItemsList"></div>
+
+            <div style="display: flex; justify-content: space-between; margin: 10px 0; font-weight: bold;">
+                <button class="btn btn-danger" onclick="clearCart()" style="font-size: 11px;">🗑️
+                    ລຶບรายการທັງໝົດ</button>
+                <span>ລວມທັງໝົດ: <span id="cartModalTotal" style="color: #2e7d32;">0 LAK</span></span>
+            </div>
+
+            <!-- Step 1: Payment -->
+            <div id="paymentStep" style="border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px;">
+                <h4 style="color: #d32f2f;">ຂັ້ນຕອນທີ 1: ຊຳລະເງິນຜ່ານ QR Bank</h4>
+                <div class="qr-box">
+                    <p style="font-size: 12px; font-weight: bold; color: #333;">ສະແກນ QR Code ເພື່ອຊຳລະເງິນ</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BCEL-ONE-PAYMENT-EXAMPLE"
+                        alt="QR Payment">
+                    <p style="font-size: 11px; color: #666; margin-top: 5px;">ธนาคารการค้าต่างประเทศลาว (BCEL)</p>
+                </div>
+                <label
+                    style="display: flex; align-items: center; gap: 8px; cursor: pointer; background: #fff3e0; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                    <input type="checkbox" id="confirmPaidCheckbox">
+                    <span style="font-size: 13px; font-weight: bold; color: #e65100;">✅ ຢືນຢັນຊຳລະເງິນຮຽບຮ້ອຍແລ້ວ</span>
+                </label>
+                <button class="btn btn-add" style="width: 100%;"
+                    onclick="proceedToShipping()">ໄປຂັ້ນຕອນປ້ອນຂໍ້ມູນຈັດສົ່ງ ➔</button>
+            </div>
+
+            <!-- Step 2: Shipping Info (Hidden Initially) -->
+            <div id="shippingStep"
+                style="display: none; border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px;">
+                <h4 style="color: #2e7d32; margin-bottom: 10px;">ຂັ້ນຕອນທີ 2: ປ້ອນຂໍ້ມູນຈັດສົ່ງ</h4>
+                <div class="input-group">
+                    <label>ຊື່ຜູ້ສັ່ງຊື້:</label>
+                    <input type="text" id="custName" placeholder="ປ້ອນຊື່ ແລະ ນາມສະກຸນ">
+                </div>
+                <div class="input-group">
+                    <label>ເບີໂທລະສັບທີຕິດຕໍ່ໄດ້:</label>
+                    <input type="tel" id="custPhone" placeholder="020 xxxx xxxx">
+                </div>
+                <div class="input-group">
+                    <label>ສາຂາບໍລິສັດຈັດສົ່ງ:</label>
+                    <select id="custBranch">
+                        <option value="ອານຸສິດ (Anousith Express)">ອານຸສິດ (Anousith Express)</option>
+                        <option value="ຮຸ່ງອາລຸນ (HAL Logistics)">ຮຸ່ງອາລຸນ (HAL Logistics)</option>
+                        <option value="ມີໄຊ (Mixay Express)">ມີໄຊ (Mixay Express)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>ບ້ານ:</label>
+                    <input type="text" id="custVillage" placeholder="ປ້ອນຊື່ບ້ານ">
+                </div>
+                <div class="input-group">
+                    <label>ເມືອງ:</label>
+                    <input type="text" id="custDistrict" placeholder="ປ້ອນຊື່ເມືອງ">
+                </div>
+                <div class="input-group">
+                    <label>ແຂວງ:</label>
+                    <input type="text" id="custProvince" placeholder="ປ້ອນຊື່ແຂວງ">
+                </div>
+
+                <button class="btn btn-success" onclick="submitOrder()">📩 ຢືນຢັນການສັ່ງຊື້</button>
+            </div>
+
+            <div class="contact-footer">
+                💬 ຫຼັງຈາກຊຳລະເງິນແລ້ວ ຫຼື ຕ້ອງການສອບຖາມໄລຍະເວລາຈັດສົ່ງສາມາດຕິດຕໍ່ເຈົ້າຫນ້າທີ່ທາງເບີ <b>WhatsApp: +856
+                    20 98 614 336</b>
+            </div>
+
+            <button class="btn btn-danger" onclick="closeCartModal()"
+                style="width: 100%; margin-top: 10px;">ປິດ</button>
+        </div>
+    </div>
+
+    <!-- Firebase Logic -->
+    <script type="module">
+        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import {getDatabase, ref, onValue, push} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBriOzZumxBXSpwL6Kavvyd089UiPzTQfw",
+            authDomain: "hukhujai-app.firebaseapp.com",
+            databaseURL: "https://hukhujai-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "hukhujai-app",
+            storageBucket: "hukhujai-app.firebasestorage.app",
+            messagingSenderId: "536937955261",
+            appId: "1:536937955261:web:4a35c99a854a1e58c89cd4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let cart = [];
+        let simDataList = {};
+
+        // Fetch SIM List from Firebase
+        onValue(ref(db, 'sims'), (snapshot) => {
+            const data = snapshot.val();
+            simDataList = data || {};
+            const simListDiv = document.getElementById('simList');
+            simListDiv.innerHTML = '';
+
+            if (!data) {
+                simListDiv.innerHTML = '<p style="text-align:center;">ບໍ່ມີເບີໂທລະສັບໃນຮ້ານ</p>';
+                return;
+            }
+
+            for (let id in data) {
+                const item = data[id];
+                if (item.status === 'ว่าง') {
+                    const div = document.createElement('div');
+                    div.className = 'sim-item';
+                    div.innerHTML = `
+                        <div>
+                            <div class="sim-num">📱 ${item.number}</div>
+                            <div class="sim-details">ຊື່ຊິມ: ${item.simName} | ເຄືອຂ່າຍ: ${item.network || '-'}</div>
+                            <div class="sim-price">${Number(item.price).toLocaleString()} ${item.currency || 'LAK'}</div>
+                        </div>
+                        <button class="btn btn-add" onclick="addToCart('${id}', '${item.number}', '${item.simName}', ${item.price}, '${item.currency || 'LAK'}')">+ ສັ່ງຊື້</button>
+                    `;
+                    simListDiv.appendChild(div);
+                }
+            }
+        });
+
+        window.addToCart = function (id, number, simName, price, currency) {
+            if (cart.find(i => i.id === id)) {
+                alert('ເບີນີ້ຢູ່ໃນກະຕ່າສິນຄ້າແລ້ວ!');
+                return;
+            }
+            cart.push({id, number, simName, price, currency});
+            updateCartUI();
+        };
+
+        window.removeFromCart = function (index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        };
+
+        window.clearCart = function () {
+            cart = [];
+            updateCartUI();
+        };
+
+        function updateCartUI() {
+            document.getElementById('cartCount').innerText = cart.length;
+            const total = cart.reduce((sum, i) => sum + Number(i.price), 0);
+            document.getElementById('cartTotal').innerText = total.toLocaleString() + ' LAK';
+            document.getElementById('cartModalTotal').innerText = total.toLocaleString() + ' LAK';
+
+            const cartList = document.getElementById('cartItemsList');
+            cartList.innerHTML = '';
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p style="text-align:center; padding: 10px;">ກະຕ່າສິນຄ້າຫວ່າງເປົ່າ</p>';
+            } else {
+                cart.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding: 8px 0; border-bottom: 1px dashed #ccc;';
+                    div.innerHTML = `
+                        <div><b>${item.number}</b> (${item.simName})<br><small style="color:#2e7d32;">${Number(item.price).toLocaleString()} ${item.currency}</small></div>
+                        <button class="btn btn-danger" style="padding: 4px 8px; font-size:11px;" onclick="removeFromCart(${idx})">ລຶບ</button>
+                    `;
+                    cartList.appendChild(div);
+                });
+            }
+        }
+
+        window.openCartModal = function () {document.getElementById('cartModal').style.display = 'flex';};
+        window.closeCartModal = function () {document.getElementById('cartModal').style.display = 'none';};
+
+        window.proceedToShipping = function () {
+            if (cart.length === 0) {
+                alert('ກະລຸນາເລືອກເບີໂທລະສັບຢ່າງໜ້ອຍ 1 ລາຍການ');
+                return;
+            }
+            const isPaid = document.getElementById('confirmPaidCheckbox').checked;
+            if (!isPaid) {
+                alert('ກະລຸນາກົດຢືນຢັນການຊຳລະເງິນກ່ອນ 진행');
+                return;
+            }
+            document.getElementById('shippingStep').style.display = 'block';
+        };
+
+        window.submitOrder = function () {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const branch = document.getElementById('custBranch').value;
+            const village = document.getElementById('custVillage').value.trim();
+            const district = document.getElementById('custDistrict').value.trim();
+            const province = document.getElementById('custProvince').value.trim();
+
+            if (!name || !phone || !village || !district || !province) {
+                alert('ກະລຸນາປ້ອນຂໍ້ມູນຈັດສົ່ງໃຫ້ຄົບຖ້ວນ');
+                return;
+            }
+
+            const orderData = {
+                items: cart,
+                totalAmount: cart.reduce((sum, i) => sum + Number(i.price), 0),
+                customer: {name, phone, branch, village, district, province},
+                paymentStatus: 'ຢືນຢັນຊຳລະເງິນແລ້ວ',
+                orderStatus: 'รออนุมัติ',
+                createdAt: new Date().toLocaleString()
+            };
+
+            push(ref(db, 'orders'), orderData).then(() => {
+                alert('ບັນທຶກການສັ່ງຊື້ຮຽບຮ້ອຍແລ້ວ! ເຈົ້າໜ້າທີ່ຈະກວດສອບ ແລະ ຈັດສົ່ງໃຫ້ໄວที่สุด');
+                cart = [];
+                updateCartUI();
+                document.getElementById('confirmPaidCheckbox').checked = false;
+                document.getElementById('shippingStep').style.display = 'none';
+                closeCartModal();
+            });
+        };
+    </script>
+</body>
+
+</html>
