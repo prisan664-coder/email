@@ -76,7 +76,6 @@
             transform: translateY(-1px);
         }
 
-        /* Search Input Field */
         .search-input {
             border: none;
             outline: none;
@@ -91,7 +90,6 @@
             color: #aaa;
         }
 
-        /* Search Button */
         .search-btn {
             background: linear-gradient(135deg, #ff7043, #d84315);
             border: none;
@@ -169,6 +167,52 @@
             margin: 0 auto;
         }
 
+        /* Stats Section - สรุปยอด */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 10px 5px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #ccc;
+        }
+
+        .stat-card.total {
+            border-color: #7e57c2;
+        }
+
+        .stat-card.new {
+            border-color: #0288d1;
+        }
+
+        .stat-card.using {
+            border-color: #ed6c02;
+        }
+
+        .stat-card.sold {
+            border-color: #2e7d32;
+        }
+
+        .stat-title {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
         /* Form Styling */
         .card {
             background: white;
@@ -178,11 +222,40 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
-        .card h3 {
-            margin-bottom: 10px;
-            color: #bf360c;
+        .card-header-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 2px solid #ffe0b2;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .card-header-action h3 {
+            color: #bf360c;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Toggle Sensor Button */
+        .btn-sensor {
+            background-color: #455a64;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-sensor.active {
+            background-color: #d32f2f;
         }
 
         .input-group {
@@ -196,12 +269,27 @@
             font-weight: bold;
         }
 
-        .input-group input {
+        .input-group input,
+        .input-group select {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 14px;
+            background-color: #fff;
+        }
+
+        .price-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .price-group input {
+            flex: 2;
+        }
+
+        .price-group select {
+            flex: 1;
         }
 
         .btn-add {
@@ -283,6 +371,24 @@
             background-color: #d32f2f;
         }
 
+        .btn-sim-page {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background-color: #0288d1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-sim-page:hover {
+            background-color: #0277bd;
+        }
+
         /* Bottom Navigation Bar */
         .bottom-nav {
             position: fixed;
@@ -334,18 +440,45 @@
         </div>
     </div>
 
-    <!-- Search Box -->
-    <div class="search-container">
-        <input type="text" class="search-input" id="searchInput" placeholder="ຄົ້ນຫາຊື່, ອີເມວ ຫຼື ເບີໂທ... (ค้นหา...)">
-        <button class="search-btn" id="searchBtn">
-            🔍 <span>ຄົ້ນຫາ</span>
-        </button>
-    </div>
-
     <div class="container">
+        <!-- Search Box -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput"
+                placeholder="ຄົ້ນຫາຊື່, ອີເມວ ຫຼື ເບີໂທ... (ค้นหา...)">
+            <button class="search-btn" id="searchBtn">
+                🔍 <span>ຄົ້ນຫາ</span>
+            </button>
+        </div>
+
+        <a href="sim_sale.html" class="btn-sim-page" style="margin-bottom: 15px;">
+            📱 ຊື້-ຂາຍເບີໂທລະສັບລົງທະບຽນແລ້ວ
+        </a>
+
+        <!-- Stats Section (นับจำนวนรายการทั้งหมด) -->
+        <div class="stats-grid">
+            <div class="stat-card total">
+                <div class="stat-title">ທັງໝົດ</div>
+                <div class="stat-value" id="countTotal">0</div>
+            </div>
+            <div class="stat-card new">
+                <div class="stat-title">ໃໝ່</div>
+                <div class="stat-value" id="countNew">0</div>
+            </div>
+            <div class="stat-card using">
+                <div class="stat-title">ກຳລັງໃຊ້</div>
+                <div class="stat-value" id="countUsing">0</div>
+            </div>
+            <div class="stat-card sold">
+                <div class="stat-title">ຂາຍແລ້ວ</div>
+                <div class="stat-value" id="countSold">0</div>
+            </div>
+        </div>
+
         <!-- Form Add/Edit -->
         <div class="card">
-            <h3 id="formTitle">ເພີ່ມອີເມວໃໝ່ (เพิ่มอีเมลใหม่)</h3>
+            <h3 id="formTitle"
+                style="border-bottom: 2px solid #ffe0b2; padding-bottom: 5px; margin-bottom: 10px; color: #bf360c;">
+                ເພີ່ມອີເມວໃໝ່ (เพิ่มอีเมลใหม่)</h3>
             <input type="hidden" id="editKey">
             <div class="input-group">
                 <label>ຊື່ (ชื่อ):</label>
@@ -363,13 +496,29 @@
                 <label>ລະຫັດຜ່ານ (รหัสผ่าน):</label>
                 <input type="text" id="passwordInput" placeholder="ປ້ອນລະຫັດຜ່ານ">
             </div>
+            <div class="input-group">
+                <label>ລາຄາຂາຍ :</label>
+                <div class="price-group">
+                    <input type="number" id="priceInput" placeholder="ປ້ອນລາຄາขาย">
+                    <select id="currencyInput">
+                        <option value="ກີບ (LAK)">ກີບ (LAK)</option>
+                        <option value="ບາດ (THB)">ບາດ (THB)</option>
+                    </select>
+                </div>
+            </div>
             <button class="btn-add" id="saveBtn">ເພີ່ມຂໍ້ມູນ</button>
             <button class="btn-cancel" id="cancelBtn" onclick="resetForm()">ຍົກເລີກການແກ້ໄຂ</button>
         </div>
 
         <!-- List Active Emails -->
         <div class="card">
-            <h3>ລາຍການອີເມວປັດຈຸບັນ (รายการอีเมลปัจจุบัน)</h3>
+            <div class="card-header-action">
+                <h3>ລາຍການອີເມວປັດຈຸບັນ</h3>
+                <!-- ปุ่มกดเซนเซอร์ข้อมูล -->
+                <button class="btn-sensor" id="sensorToggleBtn">
+                    <span>👁️</span> <span id="sensorText">ເຊັນເຊີ</span>
+                </button>
+            </div>
             <div id="emailList">
                 <p style="text-align:center;">ກຳລັງໂຫລດຂໍ້ມູນ...</p>
             </div>
@@ -407,6 +556,52 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        // ระบบบันทึกสถานะเซนเซอร์ใน LocalStorage (โหลดหน้าจะไม่หาย)
+        let isSensored = localStorage.getItem('isEmailSensored') === 'true';
+        let rawDataCache = null; // เก็บ Cache ข้อมูลเพื่อการแสดงผลใหม่
+
+        const sensorToggleBtn = document.getElementById('sensorToggleBtn');
+        const sensorText = document.getElementById('sensorText');
+
+        function updateSensorUI() {
+            if (isSensored) {
+                sensorToggleBtn.classList.add('active');
+                sensorText.innerText = 'ປິດເຊັນເຊີ (แสดงจริง)';
+            } else {
+                sensorToggleBtn.classList.remove('active');
+                sensorText.innerText = 'ເຊັນເຊີ (ปิดบัง)';
+            }
+        }
+        updateSensorUI();
+
+        // ปุ่มกด สลับ ปิด/เปิด เซนเซอร์
+        sensorToggleBtn.addEventListener('click', () => {
+            isSensored = !isSensored;
+            localStorage.setItem('isEmailSensored', isSensored);
+            updateSensorUI();
+            if (rawDataCache) {
+                renderEmails(rawDataCache);
+            }
+        });
+
+        // ฟังก์ชันสร้างข้อมูลมั่วสำหรับเซนเซอร์
+        function fakeEmail(email) {
+            if (!email) return 'xxxx@****.com';
+            const parts = email.split('@');
+            const nameLen = parts[0].length;
+            const maskedName = parts[0].substring(0, Math.min(2, nameLen)) + '***' + Math.floor(Math.random() * 89 + 10);
+            return `${maskedName}@xxxx.com`;
+        }
+
+        function fakePhone(phone) {
+            if (!phone) return '020-XXXX-XXXX';
+            return '020-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(1000 + Math.random() * 9000);
+        }
+
+        function fakePassword() {
+            return '••••••••';
+        }
+
         // Save or Update Data
         document.getElementById('saveBtn').addEventListener('click', () => {
             const editKey = document.getElementById('editKey').value;
@@ -414,6 +609,8 @@
             const phone = document.getElementById('phoneInput').value.trim();
             const email = document.getElementById('emailInput').value.trim();
             const password = document.getElementById('passwordInput').value.trim();
+            const price = document.getElementById('priceInput').value.trim();
+            const currency = document.getElementById('currencyInput').value;
 
             if (!name || !email || !password) {
                 alert('ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ');
@@ -423,7 +620,7 @@
             if (editKey) {
                 // Update
                 const itemRef = ref(db, `emails/${editKey}`);
-                update(itemRef, {name, phone, email, password}).then(() => {
+                update(itemRef, {name, phone, email, password, price, currency}).then(() => {
                     alert('ບັນທຶກການແກ້ໄຂສຳເລັດ!');
                     resetForm();
                 });
@@ -432,7 +629,7 @@
                 const emailListRef = ref(db, 'emails');
                 const newEmailRef = push(emailListRef);
                 set(newEmailRef, {
-                    name, phone, email, password,
+                    name, phone, email, password, price, currency,
                     status: 'ໃຫມ່'
                 }).then(() => {
                     alert('ເພີ່ມຂໍ້ມູນສຳເລັດ!');
@@ -441,14 +638,29 @@
             }
         });
 
-        // Read Active Emails
+        // Read Active Emails and Calculate Statistics
         const emailListRef = ref(db, 'emails');
         onValue(emailListRef, (snapshot) => {
             const data = snapshot.val();
+            rawDataCache = data;
+            renderEmails(data);
+        });
+
+        // Render List & Counts
+        function renderEmails(data) {
             const emailListDiv = document.getElementById('emailList');
             emailListDiv.innerHTML = '';
 
+            let countTotal = 0;
+            let countNew = 0;
+            let countUsing = 0;
+            let countSold = 0;
+
             if (!data) {
+                document.getElementById('countTotal').innerText = '0';
+                document.getElementById('countNew').innerText = '0';
+                document.getElementById('countUsing').innerText = '0';
+                document.getElementById('countSold').innerText = '0';
                 emailListDiv.innerHTML = '<p style="text-align:center; color:#666;">ບໍ່ມີຂໍ້ມູນອີເມວ</p>';
                 return;
             }
@@ -456,15 +668,32 @@
             let hasItems = false;
             for (let id in data) {
                 const item = data[id];
+                countTotal++;
+
+                // นับจำนวนสถานะต่างๆ
+                if (item.status === 'ໃຫມ່') countNew++;
+                else if (item.status === 'ກຳລັງໃຊ້ງານ') countUsing++;
+                else if (item.status === 'ຂາຍອອກແລ້ວ') countSold++;
+
+                // แสดงเฉพาะรายการที่ยังไม่ขายออก
                 if (item.status !== 'ຂາຍອອກແລ້ວ') {
                     hasItems = true;
+                    const formattedPrice = item.price ? Number(item.price).toLocaleString() : '0';
+                    const currencyUnit = item.currency || 'ກີບ (LAK)';
+
+                    // ใช้ค่าจริงหรือค่ามั่วขึ้นอยู่กับปุ่มเซนเซอร์
+                    const displayPhone = isSensored ? fakePhone(item.phone) : (item.phone || '-');
+                    const displayEmail = isSensored ? fakeEmail(item.email) : item.email;
+                    const displayPassword = isSensored ? fakePassword() : item.password;
+
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'email-item';
                     itemDiv.innerHTML = `
                         <p><strong>ຊື່:</strong> ${item.name}</p>
-                        <p><strong>ເບີໂທ:</strong> ${item.phone || '-'}</p>
-                        <p><strong>ອີເມວ:</strong> ${item.email}</p>
-                        <p><strong>ລະຫັດຜ່ານ:</strong> ${item.password}</p>
+                        <p><strong>ເບີໂທ:</strong> ${displayPhone}</p>
+                        <p><strong>ອີເມວ:</strong> ${displayEmail}</p>
+                        <p><strong>ລະຫັດຜ່ານ:</strong> ${displayPassword}</p>
+                        <p><strong>ລາຄາຂາຍ:</strong> <span style="color:#2e7d32; font-weight:bold;">${formattedPrice} ${currencyUnit}</span></p>
                         <p><strong>ສະຖານະ:</strong> <span style="color:#bf360c; font-weight:bold;">${item.status}</span></p>
                         <div class="status-btns">
                             <button class="btn-status btn-new" onclick="updateStatus('${id}', 'ໃຫມ່')">ໃຫມ່</button>
@@ -472,7 +701,7 @@
                             <button class="btn-status btn-used" onclick="updateStatus('${id}', 'ຂາຍອອກແລ້ວ')">ຂາຍອອກແລ້ວ</button>
                         </div>
                         <div class="action-btns">
-                            <button class="btn-action btn-edit" onclick="editItem('${id}', '${item.name}', '${item.phone || ''}', '${item.email}', '${item.password}')">✏️ ແກ້ໄຂ</button>
+                            <button class="btn-action btn-edit" onclick="editItem('${id}', '${item.name}', '${item.phone || ''}', '${item.email}', '${item.password}', '${item.price || ''}', '${item.currency || 'ກີບ (LAK)'}')">✏️ ແກ້ໄຂ</button>
                             <button class="btn-action btn-delete" onclick="deleteItem('${id}')">🗑️ ລຶບ</button>
                         </div>
                     `;
@@ -480,10 +709,16 @@
                 }
             }
 
+            // แสดงยอดรวมทั้งหมดขึ้นป้าย Dashboard
+            document.getElementById('countTotal').innerText = countTotal;
+            document.getElementById('countNew').innerText = countNew;
+            document.getElementById('countUsing').innerText = countUsing;
+            document.getElementById('countSold').innerText = countSold;
+
             if (!hasItems) {
                 emailListDiv.innerHTML = '<p style="text-align:center; color:#666;">ບໍ່ມີຂໍ້ມູນອີເມວທີ່ກຳລັງໃຊ້ງານ</p>';
             }
-        });
+        }
 
         // Update status
         window.updateStatus = function (id, status) {
@@ -502,12 +737,14 @@
         };
 
         // Edit item
-        window.editItem = function (id, name, phone, email, password) {
+        window.editItem = function (id, name, phone, email, password, price, currency) {
             document.getElementById('editKey').value = id;
             document.getElementById('nameInput').value = name;
             document.getElementById('phoneInput').value = phone;
             document.getElementById('emailInput').value = email;
             document.getElementById('passwordInput').value = password;
+            document.getElementById('priceInput').value = price || '';
+            document.getElementById('currencyInput').value = currency || 'ກີບ (LAK)';
 
             document.getElementById('formTitle').innerText = 'ແກ້ໄຂຂໍ້ມູນອີເມວ (แก้ไขข้อมูล)';
             document.getElementById('saveBtn').innerText = 'ບັນທຶກການແກ້ໄຂ';
@@ -522,6 +759,8 @@
             document.getElementById('phoneInput').value = '';
             document.getElementById('emailInput').value = '';
             document.getElementById('passwordInput').value = '';
+            document.getElementById('priceInput').value = '';
+            document.getElementById('currencyInput').value = 'ກີບ (LAK)';
 
             document.getElementById('formTitle').innerText = 'ເພີ່ມອີເມວໃໝ່ (เพิ่มอีเมลใหม่)';
             document.getElementById('saveBtn').innerText = 'ເພີ່ມຂໍ້ມູນ';
@@ -531,18 +770,17 @@
         // ฟังก์ชันค้นหา Real-time
         document.getElementById('searchInput').addEventListener('keyup', function () {
             const filterValue = this.value.toLowerCase();
-            const items = document.querySelectorAll('.email-item, .history-item'); // ดึงรายการในหน้าเว็บมาตรวจ
+            const items = document.querySelectorAll('.email-item');
 
             items.forEach(item => {
                 const text = item.textContent.toLowerCase();
                 if (text.includes(filterValue)) {
-                    item.style.display = 'block'; // แสดงถ้่าตรงคำค้นหา
+                    item.style.display = 'block';
                 } else {
-                    item.style.display = 'none';  // ซ่อนถ้าไม่ตรง
+                    item.style.display = 'none';
                 }
             });
         });
-
     </script>
 </body>
 
