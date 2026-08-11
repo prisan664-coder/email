@@ -133,11 +133,27 @@
             font-weight: bold;
         }
 
-        .input-group input {
+        .input-group input,
+        .input-group select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 14px;
+            background-color: #fff;
+        }
+
+        .price-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .price-group input {
+            flex: 2;
+        }
+
+        .price-group select {
+            flex: 1;
         }
 
         .bottom-nav {
@@ -209,6 +225,16 @@
                 <label>ລະຫັດຜ່ານ:</label>
                 <input type="text" id="modalPassword">
             </div>
+            <div class="input-group">
+                <label>ລາຄາຂາຍ:</label>
+                <div class="price-group">
+                    <input type="number" id="modalPrice" placeholder="ປ້ອນລາຄາຂາຍ">
+                    <select id="modalCurrency">
+                        <option value="ກີບ (LAK)">ກີບ (LAK)</option>
+                        <option value="ບາດ (THB)">ບາດ (THB)</option>
+                    </select>
+                </div>
+            </div>
             <div class="action-btns">
                 <button class="btn-action btn-edit" id="saveModalBtn">ບັນທຶກ</button>
                 <button class="btn-action btn-delete" onclick="closeModal()">ຍົກເລີກ</button>
@@ -222,6 +248,17 @@
             <span class="nav-icon">🏠</span>
             ໜ້າທຳອິດ
         </a>
+
+        <a href="https://prisan664-coder.github.io/Fuji-sale-note/index.html" class="nav-item active">
+            <span class="nav-icon">✏️</span>
+            ບັນທຶກ
+        </a>
+
+          <a href="https://prisan664-coder.github.io/remembers-/login.html" class="nav-item active">
+            <span class="nav-icon">🌏</span>
+            ສະສົມຄະແນນ
+        </a>
+
         <a href="history.html" class="nav-item active">
             <span class="nav-icon">📜</span>
             ປະຫວັດອີເມວເກົ່າ
@@ -264,6 +301,9 @@
                 const item = data[id];
                 if (item.status === 'ຂາຍອອກແລ້ວ') {
                     hasItems = true;
+                    const formattedPrice = item.price ? Number(item.price).toLocaleString() : '0';
+                    const currencyUnit = item.currency || 'ກີບ (LAK)';
+
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'history-item';
                     itemDiv.innerHTML = `
@@ -271,10 +311,11 @@
                         <p><strong>ເບີໂທ:</strong> ${item.phone || '-'}</p>
                         <p><strong>ອີເມວ:</strong> ${item.email}</p>
                         <p><strong>ລະຫັດຜ່ານ:</strong> ${item.password}</p>
+                        <p><strong>ລາຄາຂາຍ:</strong> <span style="color:#2e7d32; font-weight:bold;">${formattedPrice} ${currencyUnit}</span></p>
                         <p><strong>ສະຖານະ:</strong> <span style="color:#d32f2f; font-weight:bold;">${item.status}</span></p>
                         <button class="btn-restore" onclick="restoreStatus('${id}')">↩️ ຍ້າຍກັບໄປໜ້າທຳອິດ</button>
                         <div class="action-btns">
-                            <button class="btn-action btn-edit" onclick="openModal('${id}', '${item.name}', '${item.phone || ''}', '${item.email}', '${item.password}')">✏️ ແກ້ໄຂ</button>
+                            <button class="btn-action btn-edit" onclick="openModal('${id}', '${item.name}', '${item.phone || ''}', '${item.email}', '${item.password}', '${item.price || ''}', '${item.currency || 'ກີບ (LAK)'}')">✏️ ແກ້ໄຂ</button>
                             <button class="btn-action btn-delete" onclick="deleteItem('${id}')">🗑️ ລຶບ</button>
                         </div>
                     `;
@@ -304,12 +345,14 @@
         };
 
         // Modal Functions for Edit
-        window.openModal = function (id, name, phone, email, password) {
+        window.openModal = function (id, name, phone, email, password, price, currency) {
             document.getElementById('modalEditKey').value = id;
             document.getElementById('modalName').value = name;
             document.getElementById('modalPhone').value = phone;
             document.getElementById('modalEmail').value = email;
             document.getElementById('modalPassword').value = password;
+            document.getElementById('modalPrice').value = price || '';
+            document.getElementById('modalCurrency').value = currency || 'ກີບ (LAK)';
             document.getElementById('editModal').style.display = 'flex';
         };
 
@@ -323,6 +366,8 @@
             const phone = document.getElementById('modalPhone').value.trim();
             const email = document.getElementById('modalEmail').value.trim();
             const password = document.getElementById('modalPassword').value.trim();
+            const price = document.getElementById('modalPrice').value.trim();
+            const currency = document.getElementById('modalCurrency').value;
 
             if (!name || !email || !password) {
                 alert('ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ');
@@ -330,7 +375,7 @@
             }
 
             const itemRef = ref(db, `emails/${id}`);
-            update(itemRef, {name, phone, email, password}).then(() => {
+            update(itemRef, {name, phone, email, password, price, currency}).then(() => {
                 alert('ບັນທຶກການແກ້ໄຂສຳເລັດ!');
                 closeModal();
             });
