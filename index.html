@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ລະບົບຈັດເກບອີເມວ - ໜ້າທຳອິດ</title>
+    <title>ລະບົບລວມເວັບທັ້ງຫມົດ</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -54,65 +54,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        /* Search Bar Container */
-        .search-container {
-            display: flex;
-            align-items: center;
-            background: #ffffff;
-            border-radius: 30px;
-            padding: 5px 8px 5px 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            max-width: 100%;
-            margin: 10px 0 15px 0;
-            border: 2px solid #ff7043;
-            transition: all 0.3s ease;
-        }
-
-        .search-container:focus-within {
-            border-color: #bf360c;
-            box-shadow: 0 6px 20px rgba(191, 54, 12, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .search-input {
-            border: none;
-            outline: none;
-            background: transparent;
-            width: 100%;
-            font-size: 14px;
-            color: #333;
-            font-family: 'Noto Sans Lao', sans-serif;
-        }
-
-        .search-input::placeholder {
-            color: #aaa;
-        }
-
-        .search-btn {
-            background: linear-gradient(135deg, #ff7043, #d84315);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(216, 67, 21, 0.4);
-        }
-
-        .search-btn:hover {
-            background: linear-gradient(135deg, #f4511e, #bf360c);
-            transform: scale(1.03);
-        }
-
-        .search-btn:active {
-            transform: scale(0.97);
         }
 
         @keyframes slideAnimation {
@@ -167,7 +108,57 @@
             margin: 0 auto;
         }
 
-        /* Stats Section - สรุปยอด */
+        /* Search Bar Container */
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 5px 8px 5px 18px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            max-width: 100%;
+            margin: 10px 0 15px 0;
+            border: 2px solid #ff7043;
+            transition: all 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            border-color: #bf360c;
+            box-shadow: 0 6px 20px rgba(191, 54, 12, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+            font-family: 'Noto Sans Lao', sans-serif;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #ff7043, #d84315);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(216, 67, 21, 0.4);
+        }
+
+        /* Stats Section */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -238,7 +229,6 @@
             margin: 0;
         }
 
-        /* Toggle Sensor Button */
         .btn-sensor {
             background-color: #455a64;
             color: white;
@@ -277,6 +267,22 @@
             border-radius: 6px;
             font-size: 14px;
             background-color: #fff;
+        }
+
+        /* Input Password Wrapper */
+        .pwd-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .pwd-toggle {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
         .price-group {
@@ -328,8 +334,25 @@
         }
 
         .email-item p {
-            margin: 3px 0;
+            margin: 4px 0;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-copy {
+            background: #e0e0e0;
+            border: none;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-left: 6px;
+        }
+
+        .btn-copy:hover {
+            background: #d6d6d6;
         }
 
         .status-btns,
@@ -385,11 +408,6 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-sim-page:hover {
-            background-color: #0277bd;
-        }
-
-        /* Bottom Navigation Bar */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -429,7 +447,7 @@
         ລະບົບຈັດເກບ ແລະ ຈັດການອີເມວ
     </div>
 
-    <!-- Image Slider (5 Images) -->
+    <!-- Image Slider -->
     <div class="slider-container">
         <div class="slides">
             <div class="slide"><img src="Img/1.jpg" alt="Slide 1"></div>
@@ -443,8 +461,7 @@
     <div class="container">
         <!-- Search Box -->
         <div class="search-container">
-            <input type="text" class="search-input" id="searchInput"
-                placeholder="ຄົ້ນຫາຊື່, ອີເມວ ຫຼື ເບີໂທ... (ค้นหา...)">
+            <input type="text" class="search-input" id="searchInput" placeholder="ຄົ້ນຫາຊື່, ອີເມວ ຫຼື ເບີໂທ...">
             <button class="search-btn" id="searchBtn">
                 🔍 <span>ຄົ້ນຫາ</span>
             </button>
@@ -454,7 +471,24 @@
             📱 ຊື້-ຂາຍເບີໂທລະສັບລົງທະບຽນແລ້ວ
         </a>
 
-        <!-- Stats Section (นับจำนวนรายการทั้งหมด) -->
+        <a href="https://prisan664-coder.github.io/Fuji-POS/" class="btn-sim-page" style="margin-bottom: 15px;">
+            💹 POS ຫນ້າຂາຍເຄື່ອງ
+        </a>
+
+        <a href="https://onegrab.laotel.com/Authentication?LNG=1" class="btn-sim-page" style="margin-bottom: 15px;">
+            ລົງທະບຽນເບີຫຼັກ 5 Lao Telecom
+        </a>
+
+        <a href="Music.Player.html" class="btn-sim-page" style="margin-bottom: 15px;">
+            Music player
+        </a>
+
+        <a href="cock.html" class="btn-sim-page" style="margin-bottom: 15px;">
+            ໂມງປຸກ
+        </a>
+
+
+        <!-- Stats Section -->
         <div class="stats-grid">
             <div class="stat-card total">
                 <div class="stat-title">ທັງໝົດ</div>
@@ -478,26 +512,29 @@
         <div class="card">
             <h3 id="formTitle"
                 style="border-bottom: 2px solid #ffe0b2; padding-bottom: 5px; margin-bottom: 10px; color: #bf360c;">
-                ເພີ່ມອີເມວໃໝ່ (เพิ่มอีเมลใหม่)</h3>
+                ເພີ່ມອີເມວໃໝ່</h3>
             <input type="hidden" id="editKey">
             <div class="input-group">
-                <label>ຊື່ (ชื่อ):</label>
+                <label>ຊື່:</label>
                 <input type="text" id="nameInput" placeholder="ປ້ອນຊື່">
             </div>
             <div class="input-group">
-                <label>ເບີໂທ (เบอร์โทร):</label>
+                <label>ເບີໂທ:</label>
                 <input type="text" id="phoneInput" placeholder="ປ້ອນເບີໂທ">
             </div>
             <div class="input-group">
-                <label>ອີເມວ (อีเมล):</label>
+                <label>ອີເມວ:</label>
                 <input type="email" id="emailInput" placeholder="ປ້ອນອີເມວ">
             </div>
             <div class="input-group">
-                <label>ລະຫັດຜ່ານ (รหัสผ่าน):</label>
-                <input type="text" id="passwordInput" placeholder="ປ້ອນລະຫັດຜ່ານ">
+                <label>ລະຫັດຜ່ານ:</label>
+                <div class="pwd-wrapper">
+                    <input type="password" id="passwordInput" placeholder="ປ້ອນລະຫັດຜ່ານ">
+                    <button type="button" class="pwd-toggle" id="pwdToggleBtn">👁️</button>
+                </div>
             </div>
             <div class="input-group">
-                <label>ລາຄາຂາຍ :</label>
+                <label>ລາຄາຂາຍ:</label>
                 <div class="price-group">
                     <input type="number" id="priceInput" placeholder="ປ້ອນລາຄາขาย">
                     <select id="currencyInput">
@@ -507,14 +544,13 @@
                 </div>
             </div>
             <button class="btn-add" id="saveBtn">ເພີ່ມຂໍ້ມູນ</button>
-            <button class="btn-cancel" id="cancelBtn" onclick="resetForm()">ຍົກເລີກການແກ້ໄຂ</button>
+            <button class="btn-cancel" id="cancelBtn">ຍົກເລີກການແກ້ໄຂ</button>
         </div>
 
         <!-- List Active Emails -->
         <div class="card">
             <div class="card-header-action">
                 <h3>ລາຍການອີເມວປັດຈຸບັນ</h3>
-                <!-- ปุ่มกดเซนเซอร์ข้อมูล -->
                 <button class="btn-sensor" id="sensorToggleBtn">
                     <span>👁️</span> <span id="sensorText">ເຊັນເຊີ</span>
                 </button>
@@ -531,6 +567,17 @@
             <span class="nav-icon">🏠</span>
             ໜ້າທຳອິດ
         </a>
+
+        <a href="https://prisan664-coder.github.io/Fuji-sale-note/index.html" class="nav-item active">
+            <span class="nav-icon">✏️</span>
+            ບັນທຶກ
+        </a>
+
+        <a href="https://prisan664-coder.github.io/remembers-/login.html" class="nav-item active">
+            <span class="nav-icon">🌏</span>
+            ສະສົມຄະແນນ
+        </a>
+
         <a href="history.html" class="nav-item">
             <span class="nav-icon">📜</span>
             ປະຫວັດອີເມວເກົ່າ
@@ -556,25 +603,47 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // ระบบบันทึกสถานะเซนเซอร์ใน LocalStorage (โหลดหน้าจะไม่หาย)
         let isSensored = localStorage.getItem('isEmailSensored') === 'true';
-        let rawDataCache = null; // เก็บ Cache ข้อมูลเพื่อการแสดงผลใหม่
+        let rawDataCache = null;
 
         const sensorToggleBtn = document.getElementById('sensorToggleBtn');
         const sensorText = document.getElementById('sensorText');
+        const pwdInput = document.getElementById('passwordInput');
+        const pwdToggleBtn = document.getElementById('pwdToggleBtn');
+
+        // ฟังก์ชันแปลงข้อความป้องกัน XSS Attack
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Toggle Password Input Visibility
+        pwdToggleBtn.addEventListener('click', () => {
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                pwdToggleBtn.innerText = '🙈';
+            } else {
+                pwdInput.type = 'password';
+                pwdToggleBtn.innerText = '👁️';
+            }
+        });
 
         function updateSensorUI() {
             if (isSensored) {
                 sensorToggleBtn.classList.add('active');
-                sensorText.innerText = 'ປິດເຊັນເຊີ (แสดงจริง)';
+                sensorText.innerText = 'ປິດເຊັນເຊີ';
             } else {
                 sensorToggleBtn.classList.remove('active');
-                sensorText.innerText = 'ເຊັນເຊີ (ปิดบัง)';
+                sensorText.innerText = 'ເຊັນເຊີ';
             }
         }
         updateSensorUI();
 
-        // ปุ่มกด สลับ ปิด/เปิด เซนเซอร์
         sensorToggleBtn.addEventListener('click', () => {
             isSensored = !isSensored;
             localStorage.setItem('isEmailSensored', isSensored);
@@ -584,18 +653,17 @@
             }
         });
 
-        // ฟังก์ชันสร้างข้อมูลมั่วสำหรับเซนเซอร์
         function fakeEmail(email) {
             if (!email) return 'xxxx@****.com';
             const parts = email.split('@');
             const nameLen = parts[0].length;
-            const maskedName = parts[0].substring(0, Math.min(2, nameLen)) + '***' + Math.floor(Math.random() * 89 + 10);
+            const maskedName = parts[0].substring(0, Math.min(2, nameLen)) + '***';
             return `${maskedName}@xxxx.com`;
         }
 
         function fakePhone(phone) {
             if (!phone) return '020-XXXX-XXXX';
-            return '020-' + Math.floor(1000 + Math.random() * 9000) + '-' + Math.floor(1000 + Math.random() * 9000);
+            return '020-XXXX-XXXX';
         }
 
         function fakePassword() {
@@ -618,14 +686,12 @@
             }
 
             if (editKey) {
-                // Update
                 const itemRef = ref(db, `emails/${editKey}`);
                 update(itemRef, {name, phone, email, password, price, currency}).then(() => {
                     alert('ບັນທຶກການແກ້ໄຂສຳເລັດ!');
                     resetForm();
-                });
+                }).catch(err => alert('ເກີດຂໍ້ຜິດພາດ: ' + err.message));
             } else {
-                // Add new
                 const emailListRef = ref(db, 'emails');
                 const newEmailRef = push(emailListRef);
                 set(newEmailRef, {
@@ -634,11 +700,11 @@
                 }).then(() => {
                     alert('ເພີ່ມຂໍ້ມູນສຳເລັດ!');
                     resetForm();
-                });
+                }).catch(err => alert('ເກີດຂໍ້ຜິດພາດ: ' + err.message));
             }
         });
 
-        // Read Active Emails and Calculate Statistics
+        // Read Data
         const emailListRef = ref(db, 'emails');
         onValue(emailListRef, (snapshot) => {
             const data = snapshot.val();
@@ -670,38 +736,45 @@
                 const item = data[id];
                 countTotal++;
 
-                // นับจำนวนสถานะต่างๆ
                 if (item.status === 'ໃຫມ່') countNew++;
                 else if (item.status === 'ກຳລັງໃຊ້ງານ') countUsing++;
                 else if (item.status === 'ຂາຍອອກແລ້ວ') countSold++;
 
-                // แสดงเฉพาะรายการที่ยังไม่ขายออก
                 if (item.status !== 'ຂາຍອອກແລ້ວ') {
                     hasItems = true;
                     const formattedPrice = item.price ? Number(item.price).toLocaleString() : '0';
-                    const currencyUnit = item.currency || 'ກີບ (LAK)';
+                    const currencyUnit = escapeHtml(item.currency || 'ກີບ (LAK)');
 
-                    // ใช้ค่าจริงหรือค่ามั่วขึ้นอยู่กับปุ่มเซนเซอร์
-                    const displayPhone = isSensored ? fakePhone(item.phone) : (item.phone || '-');
-                    const displayEmail = isSensored ? fakeEmail(item.email) : item.email;
-                    const displayPassword = isSensored ? fakePassword() : item.password;
+                    const displayPhone = isSensored ? fakePhone(item.phone) : escapeHtml(item.phone || '-');
+                    const displayEmail = isSensored ? fakeEmail(item.email) : escapeHtml(item.email);
+                    const displayPassword = isSensored ? fakePassword() : escapeHtml(item.password);
 
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'email-item';
+                    itemDiv.dataset.id = id;
                     itemDiv.innerHTML = `
-                        <p><strong>ຊື່:</strong> ${item.name}</p>
-                        <p><strong>ເບີໂທ:</strong> ${displayPhone}</p>
-                        <p><strong>ອີເມວ:</strong> ${displayEmail}</p>
-                        <p><strong>ລະຫັດຜ່ານ:</strong> ${displayPassword}</p>
-                        <p><strong>ລາຄາຂາຍ:</strong> <span style="color:#2e7d32; font-weight:bold;">${formattedPrice} ${currencyUnit}</span></p>
-                        <p><strong>ສະຖານະ:</strong> <span style="color:#bf360c; font-weight:bold;">${item.status}</span></p>
+                        <p><span><strong>ຊື່:</strong> ${escapeHtml(item.name)}</span></p>
+                        <p>
+                            <span><strong>ເບີໂທ:</strong> ${displayPhone}</span>
+                            ${!isSensored && item.phone ? `<button class="btn-copy" onclick="copyText('${escapeHtml(item.phone)}')">📋 ກ໊ອບ</button>` : ''}
+                        </p>
+                        <p>
+                            <span><strong>ອີເມວ:</strong> ${displayEmail}</span>
+                            ${!isSensored ? `<button class="btn-copy" onclick="copyText('${escapeHtml(item.email)}')">📋 ກ໊ອບ</button>` : ''}
+                        </p>
+                        <p>
+                            <span><strong>ລະຫັດຜ່ານ:</strong> ${displayPassword}</span>
+                            ${!isSensored ? `<button class="btn-copy" onclick="copyText('${escapeHtml(item.password)}')">📋 ກ໊ອບ</button>` : ''}
+                        </p>
+                        <p><span><strong>ລາຄາຂາຍ:</strong> <span style="color:#2e7d32; font-weight:bold;">${formattedPrice} ${currencyUnit}</span></span></p>
+                        <p><span><strong>ສະຖານະ:</strong> <span style="color:#bf360c; font-weight:bold;">${escapeHtml(item.status)}</span></span></p>
                         <div class="status-btns">
                             <button class="btn-status btn-new" onclick="updateStatus('${id}', 'ໃຫມ່')">ໃຫມ່</button>
                             <button class="btn-status btn-using" onclick="updateStatus('${id}', 'ກຳລັງໃຊ້ງານ')">ກຳລັງໃຊ້ງານ</button>
                             <button class="btn-status btn-used" onclick="updateStatus('${id}', 'ຂາຍອອກແລ້ວ')">ຂາຍອອກແລ້ວ</button>
                         </div>
                         <div class="action-btns">
-                            <button class="btn-action btn-edit" onclick="editItem('${id}', '${item.name}', '${item.phone || ''}', '${item.email}', '${item.password}', '${item.price || ''}', '${item.currency || 'ກີບ (LAK)'}')">✏️ ແກ້ໄຂ</button>
+                            <button class="btn-action btn-edit" onclick="editItem('${id}')">✏️ ແກ້ໄຂ</button>
                             <button class="btn-action btn-delete" onclick="deleteItem('${id}')">🗑️ ລຶບ</button>
                         </div>
                     `;
@@ -709,7 +782,6 @@
                 }
             }
 
-            // แสดงยอดรวมทั้งหมดขึ้นป้าย Dashboard
             document.getElementById('countTotal').innerText = countTotal;
             document.getElementById('countNew').innerText = countNew;
             document.getElementById('countUsing').innerText = countUsing;
@@ -720,13 +792,20 @@
             }
         }
 
+        // Copy Text Function
+        window.copyText = function (text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('ຄັດລອກຮຽບຮ້ອຍ: ' + text);
+            });
+        };
+
         // Update status
         window.updateStatus = function (id, status) {
             const itemRef = ref(db, `emails/${id}`);
             update(itemRef, {status: status});
         };
 
-        // Delete item from Database
+        // Delete item
         window.deleteItem = function (id) {
             if (confirm('ທ່ານຕ້ອງການລຶບรายการນີ້ແທ້ບໍ?')) {
                 const itemRef = ref(db, `emails/${id}`);
@@ -736,17 +815,20 @@
             }
         };
 
-        // Edit item
-        window.editItem = function (id, name, phone, email, password, price, currency) {
-            document.getElementById('editKey').value = id;
-            document.getElementById('nameInput').value = name;
-            document.getElementById('phoneInput').value = phone;
-            document.getElementById('emailInput').value = email;
-            document.getElementById('passwordInput').value = password;
-            document.getElementById('priceInput').value = price || '';
-            document.getElementById('currencyInput').value = currency || 'ກີບ (LAK)';
+        // Edit item - ดึงข้อมูลจาก rawDataCache โดยตรง (แก้ปัญหาเครื่องหมาย Quote พิเศษในชื่อ)
+        window.editItem = function (id) {
+            if (!rawDataCache || !rawDataCache[id]) return;
+            const item = rawDataCache[id];
 
-            document.getElementById('formTitle').innerText = 'ແກ້ໄຂຂໍ້ມູນອີເມວ (แก้ไขข้อมูล)';
+            document.getElementById('editKey').value = id;
+            document.getElementById('nameInput').value = item.name || '';
+            document.getElementById('phoneInput').value = item.phone || '';
+            document.getElementById('emailInput').value = item.email || '';
+            document.getElementById('passwordInput').value = item.password || '';
+            document.getElementById('priceInput').value = item.price || '';
+            document.getElementById('currencyInput').value = item.currency || 'ກີບ (LAK)';
+
+            document.getElementById('formTitle').innerText = 'ແກ້ໄຂຂໍ້ມູນອີເມວ';
             document.getElementById('saveBtn').innerText = 'ບັນທຶກການແກ້ໄຂ';
             document.getElementById('cancelBtn').style.display = 'block';
             window.scrollTo({top: 0, behavior: 'smooth'});
@@ -762,22 +844,31 @@
             document.getElementById('priceInput').value = '';
             document.getElementById('currencyInput').value = 'ກີບ (LAK)';
 
-            document.getElementById('formTitle').innerText = 'ເພີ່ມອີເມວໃໝ່ (เพิ่มอีเมลใหม่)';
+            document.getElementById('formTitle').innerText = 'ເພີ່ມອີເມວໃໝ່';
             document.getElementById('saveBtn').innerText = 'ເພີ່ມຂໍ້ມູນ';
             document.getElementById('cancelBtn').style.display = 'none';
         };
 
-        // ฟังก์ชันค้นหา Real-time
+        document.getElementById('cancelBtn').addEventListener('click', resetForm);
+
+        // Real-time Search
         document.getElementById('searchInput').addEventListener('keyup', function () {
-            const filterValue = this.value.toLowerCase();
+            const filterValue = this.value.toLowerCase().trim();
             const items = document.querySelectorAll('.email-item');
 
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(filterValue)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
+            items.forEach(itemDiv => {
+                const id = itemDiv.dataset.id;
+                if (rawDataCache && rawDataCache[id]) {
+                    const item = rawDataCache[id];
+                    const name = (item.name || '').toLowerCase();
+                    const email = (item.email || '').toLowerCase();
+                    const phone = (item.phone || '').toLowerCase();
+
+                    if (name.includes(filterValue) || email.includes(filterValue) || phone.includes(filterValue)) {
+                        itemDiv.style.display = 'block';
+                    } else {
+                        itemDiv.style.display = 'none';
+                    }
                 }
             });
         });
