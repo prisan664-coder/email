@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="lo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ລະບົບຕັ້ງເວລາປຸກ - Alarm System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans Lao', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .alarm-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .clock {
+            font-size: 36px;
+            font-weight: bold;
+            color: #bf360c;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-set {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .btn-stop {
+            background-color: #d32f2f;
+            color: white;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #0288d1;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="alarm-card">
+        <h2>⏰ ລະບົບຕັ້ງເວລາປຸກ</h2>
+        <div class="clock" id="currentClock">00:00:00</div>
+
+        <!-- เลือกเวลาปลุก -->
+        <div class="form-group">
+            <label>ເລືອກເວລາປຸກ:</label>
+            <input type="time" id="alarmTime">
+        </div>
+
+        <!-- เลือกเสียงปลุกแบบสำเร็จรูป -->
+        <div class="form-group">
+            <label>ເລືອກສຽງປຸກ:</label>
+            <select id="soundSelect">
+                <option value="https://assets.mixkit.co/active_storage/sfx/995/995-preview.mp3">🔔 เสียงกระดิ่งปลุก
+                    (Standard Alarm)</option>
+                <option value="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3">🚨 เสียงไซเรน (Siren
+                    Alert)</option>
+            </select>
+        </div>
+
+        <!-- อัปโหลดไฟล์เพลงของตัวเอง (MP3) -->
+        <div class="form-group">
+            <label>ຫຼື ເພີ່ມໄຟລ໌ເພງ MP3 ຂອງເຈົ້າເອງ:</label>
+            <input type="file" id="customSound" accept="audio/*">
+        </div>
+
+        <button class="btn btn-set" id="setAlarmBtn">ตั้งเวลาปลุก</button>
+        <button class="btn btn-stop" id="stopAlarmBtn">🛑 ปิดเสียงปลุก</button>
+
+        <div class="status" id="statusText"></div>
+    </div>
+
+    <!-- แท็กเสียง Audio -->
+    <audio id="audioPlayer" loop></audio>
+
+    <script>
+        const currentClock = document.getElementById('currentClock');
+        const alarmTimeInput = document.getElementById('alarmTime');
+        const soundSelect = document.getElementById('soundSelect');
+        const customSoundInput = document.getElementById('customSound');
+        const setAlarmBtn = document.getElementById('setAlarmBtn');
+        const stopAlarmBtn = document.getElementById('stopAlarmBtn');
+        const statusText = document.getElementById('statusText');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        let alarmTime = null;
+        let alarmInterval = null;
+
+        // แสดงเวลาปัจจุบันแบบ Real-time
+        setInterval(() => {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            currentClock.innerText = `${hours}:${minutes}:${seconds}`;
+
+            // เช็คเวลาปลุก
+            if (alarmTime && `${hours}:${minutes}` === alarmTime && seconds === '00') {
+                triggerAlarm();
+            }
+        }, 1000);
+
+        // เมื่อกดปุ่มตั้งเวลาปลุก
+        setAlarmBtn.addEventListener('click', () => {
+            if (!alarmTimeInput.value) {
+                alert('ກະລຸນາເລືອກເວລາປຸກກ່ອນ!');
+                return;
+            }
+
+            alarmTime = alarmTimeInput.value;
+            statusText.innerText = `⏰ ຕັ້ງເວລາປຸກໄວ້ທີ່: ${alarmTime} ນາທີ`;
+            statusText.style.color = '#2e7d32';
+
+            // จัดการเรื่องไฟล์เสียง
+            if (customSoundInput.files && customSoundInput.files[0]) {
+                const file = customSoundInput.files[0];
+                audioPlayer.src = URL.createObjectURL(file);
+            } else {
+                audioPlayer.src = soundSelect.value;
+            }
+        });
+
+        // เมื่อถึงเวลาปลุก
+        function triggerAlarm() {
+            audioPlayer.play();
+            stopAlarmBtn.style.display = 'block';
+            statusText.innerText = '🔔 ຮອດເວລາປຸກແລ້ວ!';
+            statusText.style.color = '#d32f2f';
+        }
+
+        // เมื่อกดปุ่มปิดเสียงปลุก
+        stopAlarmBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            stopAlarmBtn.style.display = 'none';
+            alarmTime = null;
+            statusText.innerText = 'ยกเลิกการตั้งปลุกแล้ว';
+            statusText.style.color = '#666';
+        });
+    </script>
+
+</body>
+
+</html>
