@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Library Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --container-bg: #0f131c;
+            --header-bg: #151a24;
+            --card-bg: #181f2c;
+            --card-border: #232d3f;
+            --text-color: #ffffff;
+            --accent-color: #6366f1;
+        }
+
+        /* AMOLED Theme Class */
+        body.amoled-mode {
+            --bg-color: #000000;
+            --container-bg: #000000;
+            --header-bg: #0a0a0a;
+            --card-bg: #121212;
+            --card-border: #1f1f1f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 70px;
+            display: flex;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--container-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s;
+        }
+
+        /* Top Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: var(--header-bg);
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #8b5cf6;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-color);
+            border-radius: 8px;
+        }
+
+        .search-bar {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px 32px 8px 12px;
+            background-color: #1e2533;
+            border: 1px solid #2d3748;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #38bdf8;
+            font-size: 12px;
+        }
+
+        .btn-add-top {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Main Player Section */
+        .player-section {
+            width: 100%;
+            background-color: #000;
+            position: relative;
+            aspect-ratio: 16 / 9;
+        }
+
+        .player-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .player-wrapper iframe,
+        .player-wrapper video {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-details {
+            padding: 15px 20px;
+        }
+
+        .video-title-main {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .badges {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .badge-hd {
+            background-color: #1e1b4b;
+            color: #818cf8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Video List Section */
+        .list-section {
+            padding: 10px 20px 30px;
+            flex: 1;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .list-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-clear-all {
+            background-color: #3f1d24;
+            color: #f87171;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .video-card {
+            display: flex;
+            align-items: center;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 10px;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .video-card:hover {
+            background-color: #20293a;
+        }
+
+        .thumb-box {
+            width: 110px;
+            height: 65px;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .thumb-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-sub {
+            font-size: 11px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #252e3e;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .btn-icon:hover {
+            color: #fff;
+            background-color: #334155;
+        }
+
+        /* Modal / Dialog */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: var(--container-bg);
+            border: 1px solid #2d3748;
+            color: #fff;
+            border-radius: 6px;
+        }
+
+        .setting-group {
+            margin-bottom: 18px;
+        }
+
+        .setting-label {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--container-bg);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-cancel {
+            background: #374151;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-action {
+            background: #252e3e;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* Lock Screen Overlay */
+        .lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0b0e14;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lock-screen input {
+            width: 180px;
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            background: #181f2c;
+            color: #fff;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--header-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            color: #9ca3af;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: #818cf8;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Lock Screen (แสดงเมื่อเปิดใช้งาน PIN) -->
+    <div class="lock-screen" id="lockScreen" style="display: none;">
+        <i class="fa-solid fa-lock" style="font-size: 48px; color: #818cf8;"></i>
+        <h3>ป้อนรหัส PIN เพื่อเข้าใช้งาน</h3>
+        <input type="password" id="pinInput" maxlength="4" placeholder="••••">
+        <button class="btn-save" onclick="checkPin()">ยืนยัน</button>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand-logo" id="brandLogo" onclick="window.location.href='youtube.html'">
+                <div class="brand-icon">▶</div>
+                Tsev Neeg Hmoob
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอ..." onkeyup="filterVideos()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <button class="btn-add-top" onclick="openModal()">+ เพิ่มวิดีโอ</button>
+        </div>
+
+        <!-- Main Player Area -->
+        <div class="player-section">
+            <div class="player-wrapper" id="mainPlayer">
+                <div style="display:flex; justify-content:center; align-items:center; height:100%; color:#6b7280;">
+                    กำลังโหลดข้อมูล...
+                </div>
+            </div>
+        </div>
+
+        <div class="video-details">
+            <div class="video-title-main" id="currentTitle">เลือกวิดีโอจากคลังด้านล่าง</div>
+            <div class="badges">
+                <span class="badge-hd">HD / 4K</span>
+                <span>ซิงค์ Cloud แล้ว</span> •
+                <span>แชร์ผ่าน Cloud</span>
+            </div>
+        </div>
+
+        <!-- Video List -->
+        <div class="list-section">
+            <div class="list-header">
+                <div class="list-title">คลังวิดีโอของคุณ</div>
+                <button class="btn-clear-all" onclick="clearAllVideos()">
+                    <i class="fa-solid fa-trash-can"></i> ลบทั้งหมด
+                </button>
+            </div>
+
+            <div class="video-list" id="videoListContainer">
+                <!-- รายการวิดีโอจะถูกใส่ที่นี่ด้วย JS -->
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="scrollToTop()">
+                <i class="fa-solid fa-house"></i>
+                หน้าแรก
+            </div>
+            <div class="nav-item" onclick="openModal()">
+                <i class="fa-solid fa-plus"></i>
+                เพิ่มวิดีโอ
+            </div>
+            <div class="nav-item" onclick="openSettingsModal()">
+                <i class="fa-solid fa-gear"></i>
+                ตั้งค่า
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal เพิ่มวิดีโอ -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-square-plus"></i> เพิ่มวิดีโอใหม่</h3>
+            <input type="text" id="inputTitle" placeholder="ชื่อวิดีโอ">
+            <input type="text" id="inputUrl" placeholder="วางลิงก์วิดีโอ (XNXX, Google Drive, MP4)">
+            <input type="text" id="inputThumb" placeholder="วางลิงก์รูปหน้าปก (เว้นว่างไว้ได้)">
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal()">ยกเลิก</button>
+                <button class="btn-save" onclick="addVideo()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ตั้งค่า (Settings Modal) -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h3><i class="fa-solid fa-gear"></i> ตั้งค่าระบบ</h3>
+
+            <div class="setting-group">
+                <span class="setting-label">รูปลักษณ์</span>
+                <div class="setting-item">
+                    <span>โหมด AMOLED Black</span>
+                    <input type="checkbox" id="amoledToggle" onchange="toggleAmoled(this.checked)">
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <span class="setting-label">ความปลอดภัย</span>
+                <div class="setting-item">
+                    <span>ล็อกรหัสผ่าน PIN</span>
+                    <button class="btn-action" onclick="setupPin()"><i class="fa-solid fa-key"></i> ตั้งรหัส
+                        PIN</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <span class="setting-label">สำรองและย้ายข้อมูล</span>
+                <div class="setting-item">
+                    <span>ส่งออกข้อมูล (Export)</span>
+                    <button class="btn-action" onclick="exportJSON()"><i class="fa-solid fa-download"></i>
+                        ดาวน์โหลด</button>
+                </div>
+                <div class="setting-item">
+                    <span>นำเข้าข้อมูล (Import)</span>
+                    <button class="btn-action" onclick="document.getElementById('importFileInput').click()"><i
+                            class="fa-solid fa-upload"></i> อัปโหลด</button>
+                    <input type="file" id="importFileInput" style="display:none" accept=".json"
+                        onchange="importJSON(event)">
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeSettingsModal()">ปิด</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK & App Logic -->
+    <script type="module">
+        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import {getDatabase, ref, set, onValue, remove} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBriOzZumxBXSpwL6Kavvyd089UiPzTQfw",
+            authDomain: "hukhujai-app.firebaseapp.com",
+            databaseURL: "https://hukhujai-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "hukhujai-app",
+            storageBucket: "hukhujai-app.firebasestorage.app",
+            messagingSenderId: "536937955261",
+            appId: "1:536937955261:web:4a35c99a854a1e58c89cd4",
+            measurementId: "G-EXTZ6V7CBH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // แยก Folder/Node 'xnxx_videos' ใน Firebase
+        const linksRef = ref(db, 'xnxx_videos');
+
+        const defaultThumb = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='90' viewBox='0 0 150 90'%3E%3Crect width='150' height='90' fill='%231e293b'/%3E%3Cpath d='M60 30 L100 45 L60 60 Z' fill='%236366f1'/%3E%3C/svg%3E";
+        let videos = [];
+
+        // ตรวจสอบระบบ PIN ล็อก
+        const savedPin = localStorage.getItem('app_pin');
+        if (savedPin) {
+            document.getElementById('lockScreen').style.display = 'flex';
+        }
+
+        // ตรวจสอบโหมด AMOLED
+        if (localStorage.getItem('amoled_mode') === 'true') {
+            document.body.classList.add('amoled-mode');
+            document.getElementById('amoledToggle').checked = true;
+        }
+
+        // ดึงข้อมูล Realtime จาก Firebase
+        onValue(linksRef, (snapshot) => {
+            const data = snapshot.val();
+            videos = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    videos.push({
+                        id: key,
+                        ...data[key]
+                    });
+                });
+                videos.reverse();
+            }
+            renderList(videos);
+
+            if (videos.length > 0) {
+                playVideo(videos[0]);
+            } else {
+                document.getElementById('mainPlayer').innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100%; color:#6b7280;">ไม่มีวิดีโอในระบบ</div>';
+                document.getElementById('currentTitle').textContent = 'กรุณาเพิ่มวิดีโอใหม่';
+            }
+        });
+
+        function renderList(listData) {
+            const container = document.getElementById('videoListContainer');
+            container.innerHTML = '';
+
+            listData.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.onclick = () => playVideo(item);
+
+                card.innerHTML = `
+                <div class="thumb-box">
+                    <img src="${item.thumb || defaultThumb}" 
+                         onerror="this.onerror=null; this.src='${defaultThumb}';" 
+                         alt="thumb">
+                </div>
+                <div class="card-info">
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-sub">แชร์ผ่าน Cloud • <i class="fa-solid fa-globe"></i> Cloud</div>
+                </div>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-icon btn-delete" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `;
+                container.appendChild(card);
+            });
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    deleteVideo(btn.getAttribute('data-id'));
+                };
+            });
+        }
+
+        function playVideo(item) {
+            document.getElementById('currentTitle').textContent = item.title;
+            const playerBox = document.getElementById('mainPlayer');
+
+            let embedUrl = item.url;
+
+            // แปลงลิงก์ XNXX อัตโนมัติ
+            const xnxxMatch = item.url.match(/video-([a-zA-Z0-9]+)/);
+            if (xnxxMatch) {
+                embedUrl = `https://www.xnxx.com/embedframe/${xnxxMatch[1]}`;
+            }
+
+            // แปลงลิงก์ Google Drive อัตโนมัติ
+            const driveMatch = item.url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch) {
+                embedUrl = `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+            }
+
+            playerBox.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+        }
+
+        // ฟังก์ชันระดับ Global (window)
+        window.addVideo = function () {
+            const title = document.getElementById('inputTitle').value.trim() || 'ไม่มีชื่อวิดีโอ';
+            const url = document.getElementById('inputUrl').value.trim();
+            const thumbInput = document.getElementById('inputThumb').value.trim();
+
+            if (!url) {
+                alert('กรุณากรอกลิงก์วิดีโอ');
+                return;
+            }
+
+            const id = 'vid_' + Date.now();
+            const videoData = {
+                title: title,
+                url: url,
+                thumb: thumbInput || defaultThumb,
+                createdAt: Date.now()
+            };
+
+            set(ref(db, `xnxx_videos/${id}`), videoData)
+                .then(() => closeModal())
+                .catch((err) => alert('เกิดข้อผิดพลาด: ' + err.message));
+        };
+
+        function deleteVideo(id) {
+            if (confirm('ต้องการลบวิดีโอนี้ใช่หรือไม่?')) {
+                remove(ref(db, `xnxx_videos/${id}`));
+            }
+        }
+
+        window.clearAllVideos = function () {
+            if (confirm('ต้องการลบวิดีโอทั้งหมดในหมวดนี้ใช่หรือไม่?')) {
+                remove(linksRef);
+            }
+        };
+
+        window.filterVideos = function () {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = videos.filter(v => v.title.toLowerCase().includes(query));
+            renderList(filtered);
+        };
+
+        /* System & Settings Functions */
+        window.openModal = () => document.getElementById('addModal').style.display = 'flex';
+        window.closeModal = () => {
+            document.getElementById('addModal').style.display = 'none';
+            document.getElementById('inputTitle').value = '';
+            document.getElementById('inputUrl').value = '';
+            document.getElementById('inputThumb').value = '';
+        };
+
+        window.openSettingsModal = () => document.getElementById('settingsModal').style.display = 'flex';
+        window.closeSettingsModal = () => document.getElementById('settingsModal').style.display = 'none';
+
+        window.toggleAmoled = function (isAmoled) {
+            if (isAmoled) {
+                document.body.classList.add('amoled-mode');
+                localStorage.setItem('amoled_mode', 'true');
+            } else {
+                document.body.classList.remove('amoled-mode');
+                localStorage.setItem('amoled_mode', 'false');
+            }
+        };
+
+        window.setupPin = function () {
+            const currentPin = localStorage.getItem('app_pin');
+            if (currentPin) {
+                if (confirm('ยกเลิกการเปิดใช้งานรหัส PIN ใช่หรือไม่?')) {
+                    localStorage.removeItem('app_pin');
+                    alert('ยกเลิกรหัส PIN เรียบร้อยแล้ว');
+                }
+            } else {
+                const newPin = prompt('ตั้งรหัส PIN 4 หลัก:');
+                if (newPin && newPin.length === 4 && !isNaN(newPin)) {
+                    localStorage.setItem('app_pin', newPin);
+                    alert('เปิดใช้งานรหัส PIN เรียบร้อยแล้ว');
+                } else if (newPin) {
+                    alert('กรุณากรอกตัวเลข 4 หลักเท่านั้น');
+                }
+            }
+        };
+
+        window.checkPin = function () {
+            const input = document.getElementById('pinInput').value;
+            const currentPin = localStorage.getItem('app_pin');
+            if (input === currentPin) {
+                document.getElementById('lockScreen').style.display = 'none';
+            } else {
+                alert('รหัส PIN ไม่ถูกต้อง');
+                document.getElementById('pinInput').value = '';
+            }
+        };
+
+        window.exportJSON = function () {
+            if (videos.length === 0) {
+                alert('ไม่มีข้อมูลวิดีโอให้ส่งออก');
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(videos, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `video_backup_${Date.now()}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        };
+
+        window.importJSON = function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const importedVideos = JSON.parse(e.target.result);
+                    if (Array.isArray(importedVideos)) {
+                        importedVideos.forEach(item => {
+                            const id = 'vid_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+                            set(ref(db, `xnxx_videos/${id}`), {
+                                title: item.title || 'วิดีโอที่นำเข้า',
+                                url: item.url,
+                                thumb: item.thumb || defaultThumb,
+                                createdAt: Date.now()
+                            });
+                        });
+                        alert('นำเข้าข้อมูลสำเร็จ');
+                        closeSettingsModal();
+                    } else {
+                        alert('รูปแบบไฟล์ JSON ไม่ถูกต้อง');
+                    }
+                } catch (err) {
+                    alert('เกิดข้อผิดพลาดในการอ่านไฟล์: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        };
+
+        window.scrollToTop = function () {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+    </script>
+
+</body>
+
+</html>
