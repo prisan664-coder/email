@@ -91,6 +91,7 @@
             -webkit-text-fill-color: transparent;
             white-space: nowrap;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         .brand-icon {
@@ -124,6 +125,7 @@
             width: 100%;
             max-width: 220px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .yt-search-box input {
@@ -148,6 +150,42 @@
             justify-content: center;
         }
 
+        /* Auto-complete Dropdown Style */
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: var(--modal-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 300;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px 14px;
+            font-size: 13px;
+            color: var(--text-main);
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: var(--input-bg);
+            color: var(--accent-color);
+        }
+
         .btn-add-media {
             background: var(--accent-color);
             color: #fff;
@@ -162,8 +200,13 @@
             flex-shrink: 0;
         }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
 
         .player-box {
             width: 100%;
@@ -176,7 +219,8 @@
             overflow: hidden;
         }
 
-        video, iframe {
+        video,
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -411,7 +455,9 @@
             cursor: pointer;
         }
 
-        .settings-container { padding: 20px; }
+        .settings-container {
+            padding: 20px;
+        }
 
         .settings-group {
             background: var(--card-bg);
@@ -438,9 +484,20 @@
             border-bottom: 1px solid var(--card-border);
         }
 
-        .setting-item:last-child { border-bottom: none; }
-        .setting-label { font-size: 14px; font-weight: 500; }
-        .setting-desc { font-size: 11px; color: var(--text-sub); margin-top: 2px; }
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .setting-desc {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
 
         .switch {
             position: relative;
@@ -449,7 +506,11 @@
             height: 24px;
         }
 
-        .switch input { opacity: 0; width: 0; height: 0; }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
         .slider {
             position: absolute;
@@ -472,8 +533,13 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider { background-color: var(--accent-color); }
-        input:checked + .slider:before { transform: translateX(20px); }
+        input:checked+.slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
 
         .btn-setting-action {
             width: 100%;
@@ -525,7 +591,9 @@
             transition: transform 0.25s ease;
         }
 
-        .modal-center-backdrop.active .modal-center-card { transform: scale(1); }
+        .modal-center-backdrop.active .modal-center-card {
+            transform: scale(1);
+        }
 
         .modal-icon-badge {
             width: 48px;
@@ -538,11 +606,28 @@
             margin: 0 auto 14px auto;
         }
 
-        .badge-delete { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        .badge-edit { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+        .badge-delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
 
-        .dialog-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-        .dialog-desc { font-size: 13px; color: var(--text-sub); margin-bottom: 18px; line-height: 1.4; }
+        .badge-edit {
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+        }
+
+        .dialog-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .dialog-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
 
         .input-field {
             width: 100%;
@@ -602,9 +687,22 @@
             height: 100%;
         }
 
-        .file-input-text { font-size: 12px; color: var(--text-sub); pointer-events: none; }
-        .dialog-btns { display: flex; gap: 10px; justify-content: center; }
-        .dialog-btns button { flex: 1; padding: 10px; }
+        .file-input-text {
+            font-size: 12px;
+            color: var(--text-sub);
+            pointer-events: none;
+        }
+
+        .dialog-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .dialog-btns button {
+            flex: 1;
+            padding: 10px;
+        }
 
         .app-navbar {
             position: fixed;
@@ -636,25 +734,35 @@
             cursor: pointer;
         }
 
-        .nav-item.active { color: var(--accent-color); font-weight: 600; }
-        .nav-icon { font-size: 18px; }
+        .nav-item.active {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="app-viewport">
-        <!-- YouTube Style Header -->
+        <!-- Header พร้อมปุ่มกลับ index.html และช่องค้นหาอัตโนมัติ -->
         <header class="app-header">
-            <div class="brand-logo" id="brandLogo" onclick="window.location.href='index.html'" style="cursor: pointer;">
-    <div class="brand-icon">▶</div>
-    Tsev Neeg Hmoob
-</div>
+            <div class="brand-logo" id="brandLogo" onclick="window.location.href='index.html'">
+                <div class="brand-icon">▶</div>
+                Tsev Neeg Hmoob
+            </div>
 
             <div class="header-search-container" id="searchContainer">
                 <div class="yt-search-box">
-                    <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอ..." oninput="handleSearch(this.value)">
+                    <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอ..." oninput="handleSearch(this.value)"
+                        autocomplete="off">
                     <button class="btn-search-trigger">🔍</button>
+
+                    <!-- Dropdown ผลลัพธ์การค้นหา -->
+                    <div id="searchSuggestions" class="search-suggestions"></div>
                 </div>
             </div>
 
@@ -667,7 +775,8 @@
                 <video id="nativePlayer" controls autoplay playsinline style="display:none;">
                     <source id="videoSource" src="" type="video/mp4">
                 </video>
-                <iframe id="youtubePlayer" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
+                <iframe id="youtubePlayer" allow="autoplay; encrypted-media" allowfullscreen
+                    style="display:none;"></iframe>
 
                 <div class="autoplay-overlay" id="autoplayOverlay">
                     <div class="counter-ring" id="counterNum">5</div>
@@ -724,7 +833,8 @@
                             <div class="setting-desc">นับถอยหลังเพื่อเล่นคลิปถัดไปเมื่อคลิปปัจจุบันจบ</div>
                         </div>
                         <label class="switch">
-                            <input type="checkbox" id="toggleAutoplay" checked onchange="toggleAutoplaySetting(this.checked)">
+                            <input type="checkbox" id="toggleAutoplay" checked
+                                onchange="toggleAutoplaySetting(this.checked)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -738,9 +848,12 @@
                     <button class="btn-setting-action" onclick="document.getElementById('importFileInput').click()">
                         <span>📥</span> นำเข้าคลังวิดีโอ (Import JSON)
                     </button>
-                    <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="importData(event)">
+                    <input type="file" id="importFileInput" accept=".json" style="display:none;"
+                        onchange="importData(event)">
 
-                    <button class="btn-setting-action" style="color: var(--danger-color); border-color: rgba(239, 68, 68, 0.3); margin-top: 16px;" onclick="confirmResetAll()">
+                    <button class="btn-setting-action"
+                        style="color: var(--danger-color); border-color: rgba(239, 68, 68, 0.3); margin-top: 16px;"
+                        onclick="confirmResetAll()">
                         <span>⚠️</span> คืนค่าโรงงานและลบข้อมูล
                     </button>
                 </div>
@@ -808,7 +921,8 @@
             <div class="dialog-title">เพิ่มวิดีโอใหม่</div>
 
             <div class="upload-tab-group">
-                <button class="tab-btn active" id="tabUrlBtn" onclick="switchAddTab('url')">🔗 ใส่ลิงก์ URL / YouTube</button>
+                <button class="tab-btn active" id="tabUrlBtn" onclick="switchAddTab('url')">🔗 ใส่ลิงก์ URL /
+                    YouTube</button>
                 <button class="tab-btn" id="tabFileBtn" onclick="switchAddTab('file')">📁 เลือกจากเครื่อง</button>
             </div>
 
@@ -827,15 +941,16 @@
 
             <div class="dialog-btns">
                 <button class="btn-action btn-secondary" onclick="closeModal('addModal')">ยกเลิก</button>
-                <button class="btn-action btn-primary" id="btnConfirmAdd" onclick="addVideoToLibrary()">ตกลงเพิ่ม</button>
+                <button class="btn-action btn-primary" id="btnConfirmAdd"
+                    onclick="addVideoToLibrary()">ตกลงเพิ่ม</button>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK & App Logic -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import {getDatabase, ref, set, onValue, remove} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBriOzZumxBXSpwL6Kavvyd089UiPzTQfw",
@@ -876,7 +991,7 @@
         let mediaDatabase = [];
         let filteredDatabase = [];
         let searchQuery = "";
-        let appSettings = { darkMode: true, autoplay: true };
+        let appSettings = {darkMode: true, autoplay: true};
         let currentIndex = 0;
         let timerInterval = null;
         let countdown = 5;
@@ -896,7 +1011,6 @@
         const counterNum = document.getElementById('counterNum');
         const nextNameDisplay = document.getElementById('nextNameDisplay');
 
-        // อ่านข้อมูล Realtime จาก Firebase
         if (linksRef) {
             onValue(linksRef, (snapshot) => {
                 const data = snapshot.val();
@@ -933,17 +1047,59 @@
             }
         }
 
-        window.handleSearch = function(query) {
+        // ฟังก์ชันระบบค้นหาเด้งรายการคำแนะนำ
+        window.handleSearch = function (query) {
             searchQuery = query.toLowerCase().trim();
+            const suggestionsBox = document.getElementById('searchSuggestions');
+
+            if (searchQuery.length > 0) {
+                const matches = mediaDatabase.filter(item =>
+                    item.title.toLowerCase().includes(searchQuery)
+                );
+
+                if (matches.length > 0) {
+                    suggestionsBox.innerHTML = '';
+                    matches.forEach(item => {
+                        const originalIndex = mediaDatabase.findIndex(m => m.id === item.id);
+                        const div = document.createElement('div');
+                        div.className = 'suggestion-item';
+                        div.textContent = `🎬 ${item.title}`;
+
+                        div.onclick = function () {
+                            document.getElementById('searchInput').value = item.title;
+                            suggestionsBox.style.display = 'none';
+                            selectVideo(originalIndex);
+                        };
+
+                        suggestionsBox.appendChild(div);
+                    });
+                    suggestionsBox.style.display = 'block';
+                } else {
+                    suggestionsBox.innerHTML = '<div class="suggestion-item" style="color:var(--text-sub);">ไม่พบรายชื่อหนัง</div>';
+                    suggestionsBox.style.display = 'block';
+                }
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+
             filterAndRender();
         };
+
+        // ปิด Dropdown รายการค้นหาเมื่อคลิกที่อื่น
+        document.addEventListener('click', function (e) {
+            const searchBox = document.querySelector('.yt-search-box');
+            const suggestionsBox = document.getElementById('searchSuggestions');
+            if (searchBox && !searchBox.contains(e.target)) {
+                if (suggestionsBox) suggestionsBox.style.display = 'none';
+            }
+        });
 
         function filterAndRender() {
             if (!searchQuery) {
                 filteredDatabase = mediaDatabase;
                 document.getElementById('playlistTitle').textContent = "คลังวิดีโอของคุณ";
             } else {
-                filteredDatabase = mediaDatabase.filter(item => 
+                filteredDatabase = mediaDatabase.filter(item =>
                     item.title.toLowerCase().includes(searchQuery)
                 );
                 document.getElementById('playlistTitle').textContent = `ผลการค้นหา (${filteredDatabase.length})`;
@@ -954,7 +1110,7 @@
         function loadLocalStorageData() {
             const savedSettings = localStorage.getItem('cinema_pulse_settings');
             if (savedSettings) {
-                try { appSettings = JSON.parse(savedSettings); } catch (e) { }
+                try {appSettings = JSON.parse(savedSettings);} catch (e) { }
             }
             applySettingsUI();
 
@@ -988,7 +1144,7 @@
             document.getElementById('toggleAutoplay').checked = appSettings.autoplay;
         }
 
-        window.switchNavTab = function(tab) {
+        window.switchNavTab = function (tab) {
             document.getElementById('tabHome').classList.remove('active');
             document.getElementById('tabSettings').classList.remove('active');
             document.getElementById('navHome').classList.remove('active');
@@ -1003,7 +1159,7 @@
             }
         };
 
-        window.toggleTheme = function(isDark) {
+        window.toggleTheme = function (isDark) {
             appSettings.darkMode = isDark;
             saveSettingsData();
             if (isDark) {
@@ -1013,7 +1169,7 @@
             }
         };
 
-        window.toggleAutoplaySetting = function(isAutoplay) {
+        window.toggleAutoplaySetting = function (isAutoplay) {
             appSettings.autoplay = isAutoplay;
             saveSettingsData();
         };
@@ -1024,7 +1180,7 @@
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
-        // ฟังก์ชันดึง Thumbnail อัตโนมัติ (ดึงจาก YouTube หรือสร้างจาก MP4)
+        // ดึงภาพ Thumbnail ของ YouTube/MP4 อัตโนมัติ
         function getVideoThumbnail(item) {
             const ytId = getYouTubeId(item.src);
             if (ytId) {
@@ -1050,8 +1206,8 @@
                 card.className = `media-card ${isPlaying ? 'playing' : ''}`;
                 card.onclick = () => selectVideo(originalIndex);
 
-                let badgeTag = item.storageLocation === 'cloud' 
-                    ? '<span style="color:#818cf8; font-size:10px;">🌐 Cloud</span>' 
+                let badgeTag = item.storageLocation === 'cloud'
+                    ? '<span style="color:#818cf8; font-size:10px;">🌐 Cloud</span>'
                     : '<span style="color:#f59e0b; font-size:10px;">💾 Local</span>';
 
                 const thumbUrl = getVideoThumbnail(item);
@@ -1096,13 +1252,13 @@
                 nativePlayer.style.display = 'block';
                 source.src = currentItem.src;
                 nativePlayer.load();
-                nativePlayer.play().catch(() => {});
+                nativePlayer.play().catch(() => { });
             }
 
             renderPlaylist();
         }
 
-        nativePlayer.onended = function() {
+        nativePlayer.onended = function () {
             if (appSettings.autoplay) {
                 triggerAutoplayNext();
             }
@@ -1127,18 +1283,18 @@
             }, 1000);
         }
 
-        window.cancelAutoplay = function() {
+        window.cancelAutoplay = function () {
             if (timerInterval) clearInterval(timerInterval);
             overlay.classList.remove('active');
         };
 
-        window.playNextNow = function() {
+        window.playNextNow = function () {
             cancelAutoplay();
             let nextIndex = (currentIndex + 1) % mediaDatabase.length;
             selectVideo(nextIndex);
         };
 
-        window.openAddModal = function() {
+        window.openAddModal = function () {
             document.getElementById('addTitleInput').value = '';
             document.getElementById('urlInput').value = '';
             document.getElementById('fileInput').value = '';
@@ -1149,7 +1305,7 @@
             openModal('addModal');
         };
 
-        window.switchAddTab = function(type) {
+        window.switchAddTab = function (type) {
             currentAddType = type;
             if (type === 'url') {
                 document.getElementById('tabUrlBtn').classList.add('active');
@@ -1164,18 +1320,16 @@
             }
         };
 
-        // สกัดหน้าปกจากเฟรมวิดีโอ MP4 อัตโนมัติ
-        window.handleFileSelect = function(e) {
+        window.handleFileSelect = function (e) {
             const file = e.target.files[0];
             if (file) {
                 document.getElementById('fileNameDisplay').textContent = `📹 ${file.name}`;
                 const fileUrl = URL.createObjectURL(file);
-                
-                // แอบดึงเฟรมแรกเป็นภาพ Thumbnail
+
                 const tempVideo = document.createElement('video');
                 tempVideo.src = fileUrl;
                 tempVideo.currentTime = 1;
-                tempVideo.onloadeddata = function() {
+                tempVideo.onloadeddata = function () {
                     const canvas = document.createElement('canvas');
                     canvas.width = 300;
                     canvas.height = 168;
@@ -1185,14 +1339,14 @@
                 };
 
                 const reader = new FileReader();
-                reader.onload = function(evt) {
+                reader.onload = function (evt) {
                     loadedFileData = evt.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         };
 
-        window.addVideoToLibrary = function() {
+        window.addVideoToLibrary = function () {
             const titleInput = document.getElementById('addTitleInput').value.trim();
             const title = titleInput || 'วิดีโอไม่ได้ตั้งชื่อ';
 
@@ -1202,7 +1356,7 @@
                     alert('กรุณากรอกลิงก์วิดีโอ');
                     return;
                 }
-                
+
                 const ytId = getYouTubeId(url);
                 const autoThumb = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : "";
 
@@ -1255,13 +1409,13 @@
             }
         };
 
-        window.openEditModal = function(index) {
+        window.openEditModal = function (index) {
             targetIndexForAction = index;
             document.getElementById('editTitleInput').value = mediaDatabase[index].title;
             openModal('editModal');
         };
 
-        window.saveEditTitle = function() {
+        window.saveEditTitle = function () {
             const newTitle = document.getElementById('editTitleInput').value.trim();
             if (targetIndexForAction !== null && mediaDatabase[targetIndexForAction]) {
                 const item = mediaDatabase[targetIndexForAction];
@@ -1283,13 +1437,13 @@
             closeModal('editModal');
         };
 
-        window.confirmDeleteSingle = function(index) {
+        window.confirmDeleteSingle = function (index) {
             targetIndexForAction = index;
             document.getElementById('deleteSingleDesc').textContent = `คุณแน่ใจหรือไม่ว่าต้องการลบ "${mediaDatabase[index].title}" ?`;
             openModal('deleteSingleModal');
         };
 
-        window.executeDeleteSingle = function() {
+        window.executeDeleteSingle = function () {
             if (targetIndexForAction !== null && mediaDatabase[targetIndexForAction]) {
                 const item = mediaDatabase[targetIndexForAction];
                 if (item.storageLocation === 'cloud' && item.firebaseKey && db) {
@@ -1308,13 +1462,13 @@
             closeModal('deleteSingleModal');
         };
 
-        window.confirmDeleteAll = function() {
+        window.confirmDeleteAll = function () {
             openModal('deleteAllModal');
         };
 
-        window.executeDeleteAll = function() {
+        window.executeDeleteAll = function () {
             if (db) {
-                remove(linksRef).catch(() => {});
+                remove(linksRef).catch(() => { });
             }
             localFiles = [];
             saveLocalFilesData();
@@ -1322,15 +1476,15 @@
             closeModal('deleteAllModal');
         };
 
-        window.confirmResetAll = function() {
+        window.confirmResetAll = function () {
             if (confirm('คุณแน่ใจหรือว่าต้องการคืนค่าโรงงาน? การตั้งค่าและวิดีโอทั้งหมดจะถูกลบ')) {
                 localStorage.clear();
-                if (db) remove(linksRef).catch(() => {});
+                if (db) remove(linksRef).catch(() => { });
                 location.reload();
             }
         };
 
-        window.exportData = function() {
+        window.exportData = function () {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mediaDatabase, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
@@ -1340,9 +1494,9 @@
             downloadAnchor.remove();
         };
 
-        window.importData = function(event) {
+        window.importData = function (event) {
             const fileReader = new FileReader();
-            fileReader.onload = function(e) {
+            fileReader.onload = function (e) {
                 try {
                     const imported = JSON.parse(e.target.result);
                     if (Array.isArray(imported)) {
@@ -1370,7 +1524,7 @@
             document.getElementById(id).classList.add('active');
         }
 
-        window.closeModal = function(id) {
+        window.closeModal = function (id) {
             document.getElementById(id).classList.remove('active');
         };
 
